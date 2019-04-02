@@ -11,7 +11,7 @@
 
 String command;             //String de captura de comandos.
 int velocidadAuto = 800;         // 400 - 1023.
-int speed_Coeff = 3;
+int coeficiente_Velocidad = 3;
 
 const char* ssid = "NodeMCU Car";
 ESP8266WebServer server(80);
@@ -90,7 +90,7 @@ void continuarDerecha(){
       
       digitalWrite(IN_1, LOW);
       digitalWrite(IN_2, HIGH);
-      analogWrite(ENA, velocidadAuto/speed_Coeff);
+      analogWrite(ENA, velocidadAuto/coeficiente_Velocidad);
  
       digitalWrite(IN_3, LOW);
       digitalWrite(IN_4, HIGH);
@@ -105,14 +105,14 @@ void continuarIzquierda(){
 
       digitalWrite(IN_3, LOW);
       digitalWrite(IN_4, HIGH);
-      analogWrite(ENB, velocidadAuto/speed_Coeff);
+      analogWrite(ENB, velocidadAuto/coeficiente_Velocidad);
   }
 
 void irAtrasDerecha(){ 
 
       digitalWrite(IN_1, HIGH);
       digitalWrite(IN_2, LOW);
-      analogWrite(ENA, velocidadAuto/speed_Coeff);
+      analogWrite(ENA, velocidadAuto/coeficiente_Velocidad);
 
       digitalWrite(IN_3, HIGH);
       digitalWrite(IN_4, LOW);
@@ -127,7 +127,7 @@ void irAtrasIzquierda(){
 
       digitalWrite(IN_3, HIGH);
       digitalWrite(IN_4, LOW);
-      analogWrite(ENB, velocidadAuto/speed_Coeff);
+      analogWrite(ENB, velocidadAuto/coeficiente_Velocidad);
   }
 
 void detenerRobot(){  

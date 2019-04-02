@@ -1,16 +1,16 @@
-#define ENA   14          // Enable/speed motors Right        GPIO14(D5)
-#define ENB   12          // Enable/speed motors Left         GPIO12(D6)
-#define IN_1  15          // L298N in1 motors Right           GPIO15(D8)
-#define IN_2  13          // L298N in2 motors Right           GPIO13(D7)
-#define IN_3  2           // L298N in3 motors Left            GPIO2(D4)
-#define IN_4  0           // L298N in4 motors Left            GPIO0(D3)
+#define ENA   14          // Enable/speed motor Derecha        GPIO14(D5)
+#define ENB   12          // Enable/speed motor Izquierda         GPIO12(D6)
+#define IN_1  15          // L298N in1 motor Derecha           GPIO15(D8)
+#define IN_2  13          // L298N in2 motor Derecha           GPIO13(D7)
+#define IN_3  2           // L298N in3 motor Izquierda            GPIO2(D4)
+#define IN_4  0           // L298N in4 motor Izquierda            GPIO0(D3)
 
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h> 
 #include <ESP8266WebServer.h>
 
-String command;             //String to store app command state.
-int speedCar = 800;         // 400 - 1023.
+String command;             //String de captura de comandos.
+int velocidadAuto = 800;         // 400 - 1023.
 int speed_Coeff = 3;
 
 const char* ssid = "NodeMCU Car";
@@ -42,128 +42,128 @@ void setup() {
      server.begin();    
 }
 
-void goAhead(){ 
+void continuar(){ 
 
       digitalWrite(IN_1, LOW);
       digitalWrite(IN_2, HIGH);
-      analogWrite(ENA, speedCar);
+      analogWrite(ENA, velocidadAuto);
 
       digitalWrite(IN_3, LOW);
       digitalWrite(IN_4, HIGH);
-      analogWrite(ENB, speedCar);
+      analogWrite(ENB, velocidadAuto);
   }
 
-void goBack(){ 
+void irAtras(){ 
 
       digitalWrite(IN_1, HIGH);
       digitalWrite(IN_2, LOW);
-      analogWrite(ENA, speedCar);
+      analogWrite(ENA, velocidadAuto);
 
       digitalWrite(IN_3, HIGH);
       digitalWrite(IN_4, LOW);
-      analogWrite(ENB, speedCar);
+      analogWrite(ENB, velocidadAuto);
   }
 
-void goRight(){ 
+void irDerecha(){ 
 
       digitalWrite(IN_1, HIGH);
       digitalWrite(IN_2, LOW);
-      analogWrite(ENA, speedCar);
+      analogWrite(ENA, velocidadAuto);
 
       digitalWrite(IN_3, LOW);
       digitalWrite(IN_4, HIGH);
-      analogWrite(ENB, speedCar);
+      analogWrite(ENB, velocidadAuto);
   }
 
-void goLeft(){
+void irIzquierda(){
 
       digitalWrite(IN_1, LOW);
       digitalWrite(IN_2, HIGH);
-      analogWrite(ENA, speedCar);
+      analogWrite(ENA, velocidadAuto);
 
       digitalWrite(IN_3, HIGH);
       digitalWrite(IN_4, LOW);
-      analogWrite(ENB, speedCar);
+      analogWrite(ENB, velocidadAuto);
   }
 
-void goAheadRight(){
+void continuarDerecha(){
       
       digitalWrite(IN_1, LOW);
       digitalWrite(IN_2, HIGH);
-      analogWrite(ENA, speedCar/speed_Coeff);
+      analogWrite(ENA, velocidadAuto/speed_Coeff);
  
       digitalWrite(IN_3, LOW);
       digitalWrite(IN_4, HIGH);
-      analogWrite(ENB, speedCar);
+      analogWrite(ENB, velocidadAuto);
    }
 
-void goAheadLeft(){
+void continuarIzquierda(){
       
       digitalWrite(IN_1, LOW);
       digitalWrite(IN_2, HIGH);
-      analogWrite(ENA, speedCar);
+      analogWrite(ENA, velocidadAuto);
 
       digitalWrite(IN_3, LOW);
       digitalWrite(IN_4, HIGH);
-      analogWrite(ENB, speedCar/speed_Coeff);
+      analogWrite(ENB, velocidadAuto/speed_Coeff);
   }
 
-void goBackRight(){ 
+void irAtrasDerecha(){ 
 
       digitalWrite(IN_1, HIGH);
       digitalWrite(IN_2, LOW);
-      analogWrite(ENA, speedCar/speed_Coeff);
+      analogWrite(ENA, velocidadAuto/speed_Coeff);
 
       digitalWrite(IN_3, HIGH);
       digitalWrite(IN_4, LOW);
-      analogWrite(ENB, speedCar);
+      analogWrite(ENB, velocidadAuto);
   }
 
-void goBackLeft(){ 
+void irAtrasIzquierda(){ 
 
       digitalWrite(IN_1, HIGH);
       digitalWrite(IN_2, LOW);
-      analogWrite(ENA, speedCar);
+      analogWrite(ENA, velocidadAuto);
 
       digitalWrite(IN_3, HIGH);
       digitalWrite(IN_4, LOW);
-      analogWrite(ENB, speedCar/speed_Coeff);
+      analogWrite(ENB, velocidadAuto/speed_Coeff);
   }
 
-void stopRobot(){  
+void detenerRobot(){  
 
       digitalWrite(IN_1, LOW);
       digitalWrite(IN_2, LOW);
-      analogWrite(ENA, speedCar);
+      analogWrite(ENA, velocidadAuto);
 
       digitalWrite(IN_3, LOW);
       digitalWrite(IN_4, LOW);
-      analogWrite(ENB, speedCar);
+      analogWrite(ENB, velocidadAuto);
  }
 
 void loop() {
     server.handleClient();
     
       command = server.arg("State");
-      if (command == "F") goAhead();
-      else if (command == "B") goBack();
-      else if (command == "L") goLeft();
-      else if (command == "R") goRight();
-      else if (command == "I") goAheadRight();
-      else if (command == "G") goAheadLeft();
-      else if (command == "J") goBackRight();
-      else if (command == "H") goBackLeft();
-      else if (command == "0") speedCar = 400;
-      else if (command == "1") speedCar = 470;
-      else if (command == "2") speedCar = 540;
-      else if (command == "3") speedCar = 610;
-      else if (command == "4") speedCar = 680;
-      else if (command == "5") speedCar = 750;
-      else if (command == "6") speedCar = 820;
-      else if (command == "7") speedCar = 890;
-      else if (command == "8") speedCar = 960;
-      else if (command == "9") speedCar = 1023;
-      else if (command == "S") stopRobot();
+      if (command == "F") continuar();
+      else if (command == "B") irAtras();
+      else if (command == "L") irIzquierda();
+      else if (command == "R") irDerecha();
+      else if (command == "I") continuarDerecha();
+      else if (command == "G") continuarIzquierda();
+      else if (command == "J") irAtrasDerecha();
+      else if (command == "H") irAtrasIzquierda();
+      else if (command == "0") velocidadAuto = 400;
+      else if (command == "1") velocidadAuto = 470;
+      else if (command == "2") velocidadAuto = 540;
+      else if (command == "3") velocidadAuto = 610;
+      else if (command == "4") velocidadAuto = 680;
+      else if (command == "5") velocidadAuto = 750;
+      else if (command == "6") velocidadAuto = 820;
+      else if (command == "7") velocidadAuto = 890;
+      else if (command == "8") velocidadAuto = 960;
+      else if (command == "9") velocidadAuto = 1023;
+      else if (command == "S") detenerRobot();
 }
 
 void HTTP_handleRoot(void) {
